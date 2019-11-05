@@ -28,7 +28,7 @@ jobs:
         cmd: install --frozen-lockfile
     - name: Symlink webpack
       run: |
-        ln -s . ./node_modules/webpack
+        sudo ln -s . ./node_modules/webpack
     - name: Basic tests
       run: |
         yarn test:basic --ci
