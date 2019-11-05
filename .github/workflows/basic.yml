@@ -18,7 +18,7 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: ~/.cache/yarn
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
     - uses: borales/actions-yarn@v2.0.0
@@ -46,7 +46,7 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: ~/.cache/yarn
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
     - uses: borales/actions-yarn@v2.0.0
@@ -80,7 +80,7 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: ~/.cache/yarn
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
     - uses: borales/actions-yarn@v2.0.0
