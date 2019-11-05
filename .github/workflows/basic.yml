@@ -1,0 +1,39 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - uses: actions/cache@v1
+      with:
+        path: ~/.cache/yarn
+        key: ${{ runner.os }}-yarn-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: install --frozen-lockfile
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: link --frozen-lockfile
+    - uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: link webpack --frozen-lockfile
+    - name: Basic tests
+      run: |
+        yarn test:basic --ci
+      env:
+        CI: true
