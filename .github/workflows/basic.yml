@@ -59,9 +59,9 @@ jobs:
       run: |
         yarn lint
         
-  integration-linux:
+  integration:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     needs: [basic, lint]
     env:
       CI: true
@@ -69,6 +69,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x, 12.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
     - uses: actions/checkout@v1
@@ -86,6 +87,11 @@ jobs:
       with:
         cmd: install --frozen-lockfile
     - name: Symlink webpack
+      if: matrix.os == 'windows-latest'
+      run: |
+        mklink /D node_modules\webpack .
+    - name: Symlink webpack
+      if: matrix.os != 'windows-latest'
       run: |
         sudo ln -s . ./node_modules/webpack
     - name: Integration tests
