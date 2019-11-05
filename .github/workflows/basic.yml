@@ -26,12 +26,9 @@ jobs:
     - uses: borales/actions-yarn@v2.0.0
       with:
         cmd: install --frozen-lockfile
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: link --frozen-lockfile
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: link webpack --frozen-lockfile
+    - name: Symlink webpack
+      run: |
+        ln -s . ./node_modules/webpack
     - name: Basic tests
       run: |
         yarn test:basic --ci
